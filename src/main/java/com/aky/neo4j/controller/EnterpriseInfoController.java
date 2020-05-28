@@ -2,6 +2,8 @@ package com.aky.neo4j.controller;
 
 import com.aky.neo4j.model.Chemicals;
 import com.aky.neo4j.model.EnterpriseInfo;
+import com.aky.neo4j.model.GraphModel;
+import com.aky.neo4j.model.Result;
 import com.aky.neo4j.service.ChemicalsService;
 import com.aky.neo4j.service.EnterpriseInfoService;
 import com.aky.neo4j.util.ListUtil;
@@ -98,6 +100,64 @@ public class EnterpriseInfoController {
         map.put("in", enterpriseInfo.getInChemicals());
         map.put("out", enterpriseInfo.getOutChemicals());
         return map;
+    }
+
+    /**
+     * 下面的接口为数据展示页的相关接口
+     */
+
+    /**
+     * 全国单位性质对比情况
+     *
+     * @return
+     */
+    @GetMapping("/summaryByProvince")
+    public Result summaryByProvince() {
+        Result result = null;
+        try {
+            List<GraphModel> list = enterpriseInfoService.summaryByProvince();
+            result = new Result("success", "200", list, "获取信息成功");
+            list = null;
+        } catch (Exception e) {
+            result = new Result("error", "500", "", "获取数据失败！");
+        }
+        return result;
+    }
+
+    /**
+     * 全国单位性质占比情况
+     *
+     * @return
+     */
+    @GetMapping("/summaryByNatureOfUnit")
+    public Result summaryByNatureOfUnit() {
+        Result result = null;
+        try {
+            List<GraphModel> list = enterpriseInfoService.summaryByNatureOfUnit();
+            result = new Result("success", "200", list, "获取信息成功");
+            list = null;
+        } catch (Exception e) {
+            result = new Result("error", "500", "", "获取数据失败！");
+        }
+        return result;
+    }
+
+    /**
+     * 企业规模占比情况
+     *
+     * @return
+     */
+    @GetMapping("/summaryByEnterpriseScale")
+    public Result summaryByEnterpriseScale() {
+        Result result = null;
+        try {
+            List<GraphModel> list = enterpriseInfoService.summaryByEnterpriseScale();
+            result = new Result("success", "200", list, "获取信息成功");
+            list = null;
+        } catch (Exception e) {
+            result = new Result("error", "500", "", "获取数据失败！");
+        }
+        return result;
     }
 
 

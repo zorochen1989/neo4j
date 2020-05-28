@@ -23,11 +23,62 @@ public class EnterpriseInfo {
     @GeneratedValue
     private Long id;
 
+    @Property(name = "nodeId")
+    private Long nodeId;
+
     /**
      * 企业名称
      */
     @Property(name = "enterpriseName")
     private String enterpriseName;
+
+    /**
+     * 企业网址
+     */
+    @Property(name = "webSite")
+    private String webSite;
+
+    /**
+     * 单位代码
+     */
+    @Property(name = "unitCode")
+    private String unitCode;
+
+    /**
+     * 工商营业执照编号
+     */
+    @Property(name = "licenseNum")
+    private String licenseNum;
+
+    /**
+     * 工商营业执照生产范围
+     */
+    @Property(name = "productionScope")
+    private String productionScope;
+
+    /**
+     * 来源
+     */
+    @Property(name = "source")
+    private String source;
+
+    /**
+     * 注册资本
+     */
+    @Property(name = "registeredCapital")
+    private Double registeredCapital;
+
+    /**
+     * importTime
+     */
+    @Property(name = "importTime")
+    private String importTime;
+
+    /**
+     * fileID
+     */
+    @Property(name = "fileID")
+    private Long fileID;
 
     /**
      * 省
@@ -233,8 +284,16 @@ public class EnterpriseInfo {
     @Relationship(direction = Relationship.INCOMING,value = "")
     private List<Chemicals> inChemicals;
 
-    public EnterpriseInfo(String enterpriseName, String province, String city, String prefecture, String registeredAddress, String postalCode, String natureOfUnit, String setupTime, String legalRepresentative, String economicType2, String economicType1, String enterpriseScale, String salesRevenue, String workerNumber, String enquiryHotline, String longitude, String latitude, String storageFacilitiesHave, String hazardousChemicalsHave, String email, String productAndScale, String specialOperatorsNumber, String productionSiteAddress, String securityTelephone, String totalTankCapacity, String fax, String employeesNumber, String chemicalIndustryClassification, String agent, String contactPhoneNumber, String enterpriseSecurityCharge, String enterprisePrincipal, String enterprisePrincipalPhone, String standardizedLevelOfProductionSafety) {
+    public EnterpriseInfo(Long nodeId, String enterpriseName, String unitCode, String licenseNum, String productionScope, String source, Double registeredCapital, String importTime, Long fileID, String province, String city, String prefecture, String registeredAddress, String postalCode, String natureOfUnit, String setupTime, String legalRepresentative, String economicType2, String economicType1, String enterpriseScale, String salesRevenue, String workerNumber, String enquiryHotline, String longitude, String latitude, String storageFacilitiesHave, String hazardousChemicalsHave, String email, String productAndScale, String specialOperatorsNumber, String productionSiteAddress, String securityTelephone, String totalTankCapacity, String fax, String employeesNumber, String chemicalIndustryClassification, String agent, String contactPhoneNumber, String enterpriseSecurityCharge, String enterprisePrincipal, String enterprisePrincipalPhone, String standardizedLevelOfProductionSafety) {
+        this.nodeId = nodeId;
         this.enterpriseName = enterpriseName;
+        this.unitCode = unitCode;
+        this.licenseNum = licenseNum;
+        this.productionScope = productionScope;
+        this.source = source;
+        this.registeredCapital = registeredCapital;
+        this.importTime = importTime;
+        this.fileID = fileID;
         this.province = province;
         this.city = city;
         this.prefecture = prefecture;

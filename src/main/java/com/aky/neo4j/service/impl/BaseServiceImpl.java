@@ -1,13 +1,16 @@
 package com.aky.neo4j.service.impl;
 
+import com.aky.neo4j.model.QueryPageable;
 import com.aky.neo4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Optional;
 
 /**
@@ -131,6 +134,18 @@ public class BaseServiceImpl<T, ID extends Serializable, R extends Neo4jReposito
     @Override
     public Page<T> findAll(Pageable var1, int var2) {
         return repository.findAll(var1, var2);
+    }
+
+    @Override
+    public Pageable createPageable(QueryPageable queryPageable, T t) {
+        Sort.Direction direction = queryPageable.getDirection() == null || queryPageable.getDirection() == "" ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Field[] fields = t.getClass().getDeclaredFields();
+
+        String[] properties = queryPageable.getProperties() == null ? new String[]{fields[0].getName()} : queryPageable.getProperties();
+        int size = queryPageable.getSize() == 0 ? 15 : queryPageable.getSize();
+
+        return PageRequest.of(queryPageable.getPage(), size, new Sort(direction, properties));
+
     }
 
 

@@ -88,12 +88,36 @@ public class MajorHazard {
      * ID
      */
     @Property(name = "idNum")
-    private String idNum;
+    private Long idNum;
+
+    /**
+     * source
+     */
+    @Property(name = "source")
+    private String source;
+
+    /**
+     * importTime
+     */
+    @Property(name = "importTime")
+    private String importTime;
+
+    /**
+     * fileID
+     */
+    @Property(name = "fileID")
+    private Long fileID;
+
+    /**
+     * 外层的id
+     */
+    @Property(name = "nodeId")
+    private Long nodeId;
 
     @Relationship
     private Chemicals chemicals;
 
-    public MajorHazard(Long chemicalsId, String hazardsName, String hazardsLevel, String hazardsRNum, String hazardsAddress, String hazardsTime, String isInChemicalIndustrialPark, String industrialParkName, String hazardScale, String safeDistance, String peopleNumWithin500Meters, String safetyAccidentsWithin3Years, String idNum) {
+    public MajorHazard(Long chemicalsId, String hazardsName, String hazardsLevel, String hazardsRNum, String hazardsAddress, String hazardsTime, String isInChemicalIndustrialPark, String industrialParkName, String hazardScale, String safeDistance, String peopleNumWithin500Meters, String safetyAccidentsWithin3Years, Long idNum) {
         this.chemicalsId = chemicalsId;
         this.hazardsName = hazardsName;
         this.hazardsLevel = hazardsLevel;
