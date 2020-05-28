@@ -29,4 +29,6 @@ public interface ChemicalsRepository extends Neo4jRepository<Chemicals, Long> {
      */
     @Query("match(:EnterpriseInfo{enterpriseName:{enterpriseName}})--(chemicals) return chemicals")
     List<Chemicals> listChemicals(@Param("enterpriseName") String enterpriseName);
+
+
 }

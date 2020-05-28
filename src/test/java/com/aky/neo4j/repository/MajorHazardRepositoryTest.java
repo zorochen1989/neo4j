@@ -1,30 +1,45 @@
-package com.aky.neo4j.service.impl;
+package com.aky.neo4j.repository;
 
+import com.aky.jsoup.service.WebService;
 import com.aky.neo4j.model.GraphModel;
 import com.aky.neo4j.model.MajorHazard;
-import com.aky.neo4j.repository.MajorHazardRepository;
-import com.aky.neo4j.service.MajorHazardService;
 import com.aky.neo4j.util.MathUtil;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class MajorHazardServiceImpl extends BaseServiceImpl<MajorHazard, Long, MajorHazardRepository> implements MajorHazardService {
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class MajorHazardRepositoryTest {
 
     @Autowired
     private MajorHazardRepository majorHazardRepository;
 
-    @Override
-    public List<MajorHazard> findAllByChemicalsId(Long chemicalsId) {
-        return majorHazardRepository.findAllByChemicalsId(chemicalsId);
+    @Test
+    public void saveList() throws IOException {
+        String filePath = "D:\\chl\\work\\major\\majorHNaO.txt";
+        List<MajorHazard> majorHazardList = WebService.getMajorHazardList(filePath);
+        majorHazardRepository.saveAll(majorHazardList);
+
+
     }
 
-    @Override
-    public List<GraphModel> groupByHazardsLevel() {
+    @Test
+    public void delByNodeId() {
+//        majorHazardRepository.deleteIt(11312L);
+    }
+
+    @Test
+    public void groupByHazardsLevel() {
+
         List<GraphModel> list = new LinkedList<>();
         List<Map<String, String>> maps = majorHazardRepository.groupByHazardsLevel();
         long allCount = majorHazardRepository.count();
@@ -40,11 +55,14 @@ public class MajorHazardServiceImpl extends BaseServiceImpl<MajorHazard, Long, M
             graphModel.setData(num + "(" + MathUtil.percent(num, allCount) + ")");
             list.add(graphModel);
         }
-        return list;
+
+        String s = Arrays.toString(list.toArray());
+        System.out.println(s);
+
     }
 
-    @Override
-    public List<GraphModel> groupByHazardsTime() {
+    @Test
+    public void groupByHazardsTime() {
         List<GraphModel> list = new LinkedList<>();
         List<Map<String, String>> maps = majorHazardRepository.groupByHazardsTime();
         for (int i = 0; i < maps.size(); i++) {
@@ -58,6 +76,8 @@ public class MajorHazardServiceImpl extends BaseServiceImpl<MajorHazard, Long, M
             graphModel.setData(map.get("count"));
             list.add(graphModel);
         }
-        return list;
+
+        String s = Arrays.toString(list.toArray());
+        System.out.println(s);
     }
 }

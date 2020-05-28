@@ -1,7 +1,9 @@
 package com.aky.neo4j.controller;
 
 import com.aky.neo4j.model.Chemicals;
+import com.aky.neo4j.model.GraphModel;
 import com.aky.neo4j.model.MajorHazard;
+import com.aky.neo4j.model.Result;
 import com.aky.neo4j.service.ChemicalsService;
 import com.aky.neo4j.service.MajorHazardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +70,42 @@ public class MajorHazardController {
     @GetMapping("/hazardList/{chemicalsId}")
     public List<MajorHazard> hazardList(@PathVariable Long chemicalsId) {
         return majorHazardService.findAllByChemicalsId(chemicalsId);
+    }
+
+    /**
+     * 重大危险源等级分布图形展示
+     *
+     * @return 将结构信息封装到Result中
+     */
+    @GetMapping("/groupByHazardsLevel")
+    public Result groupByHazardsLevel() {
+        Result result = null;
+        try {
+            List<GraphModel> list = majorHazardService.groupByHazardsLevel();
+            result = new Result("success", "200", list, "获取信息成功");
+            list = null;
+        } catch (Exception e) {
+            result = new Result("error", "500", "暂无数据", "获取数据失败！");
+        }
+        return result;
+    }
+
+    /**
+     * 重大危险源投用时间趋势图形展示
+     *
+     * @return 将结构信息封装到Result中
+     */
+    @GetMapping("/groupByHazardsTime")
+    public Result groupByHazardsTime() {
+        Result result = null;
+        try {
+            List<GraphModel> list = majorHazardService.groupByHazardsTime();
+            result = new Result("success", "200", list, "获取信息成功");
+            list = null;
+        } catch (Exception e) {
+            result = new Result("error", "500", "暂无数据", "获取数据失败！");
+        }
+        return result;
     }
 
 

@@ -1,5 +1,6 @@
 package com.aky.neo4j.service;
 
+import com.aky.neo4j.model.QueryPageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -61,6 +62,8 @@ public interface BaseService<T, ID extends Serializable, R extends Neo4jReposito
     Page<T> findAll(Pageable var1);
 
     Page<T> findAll(Pageable var1, int var2);
+
+    Pageable createPageable(QueryPageable queryPageable, T t);
 
 }
 
